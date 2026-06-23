@@ -6,8 +6,6 @@
    terms of the MIT License.
    
 '''
-
-from ast import pattern
 import logging
 import os
 import plistlib
