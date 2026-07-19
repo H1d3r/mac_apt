@@ -1,5 +1,5 @@
 #!/bin/bash
-# mac_apt Installation Script for macOS - Version 2.6
+# mac_apt Installation Script for macOS - Version 2.7
 # Author: Zachary Burnham (@zmbf0r3ns1cs), Yogesh Khatri (@swiftforensics)
 #------------------------------------------------------------------------------
 # Script to auto-download Yogesh Khatri's mac_apt tool from GitHub (with necessary 
@@ -7,7 +7,7 @@
 
 # Run as './mac_apt_Install_macOS.sh'
 
-PYTHONVER="python3.13"
+PYTHONVER="python3.14"
 
 # Define function to verify validity of user directory input
 verifyDir () {
@@ -47,7 +47,7 @@ chooseInstallation_Dir () {
 # ----------------------------------------------------------------------------------- #
 
 echo "" # Space for script legibility
-echo "[*] mac_apt Installation Script for macOS - Version 2.6"
+echo "[*] mac_apt Installation Script for macOS - Version 2.7"
 echo "-----------------------------------------------------------"
 
 # Print macOS version
@@ -66,7 +66,7 @@ chooseInstallation_Dir
 # Check for Homebrew, install if not found
 if test ! $(which brew); then
     echo "[+] Installing homebrew..."
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null &> /tmp/mac_apt_installer_output.txt
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" </dev/null &> /tmp/mac_apt_installer_output.txt
     # Check for successful install
     if [[ $? -ne 0 ]]; then
         echo "[!] Installation of Homebrew failed due to an error."
