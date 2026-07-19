@@ -10,10 +10,13 @@ a = Analysis(
         ('..\\version.py', '.')
     ],
     hiddenimports=[
+        'blackboxprotobuf',
         'Crypto',
         'Crypto.Cipher.DES3',
         'Crypto.Cipher.AES',
+        'ds_store',
         'lz4.block',
+        'mac_alias',
         'plistutils.alias',
         'PIL',
         'PIL.Image',

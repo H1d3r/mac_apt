@@ -10,6 +10,9 @@ a = Analysis(
         ('..\\version.py', '.')
     ],
     hiddenimports=[
+        'blackboxprotobuf',
+        'ds_store',
+        'mac_alias',
         'plistutils.alias',
         'PIL',
         'PIL.Image',
