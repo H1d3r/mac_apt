@@ -6,7 +6,7 @@ mac_apt is a DFIR (Digital Forensics and Incident Response) tool to process Mac 
 
 mac_apt now also includes **[ios_apt](https://swiftforensics.com/2020/12/introducing-iosapt-ios-artifact-parsing.html)**, for processing ios images.
 
-#### Requirements: Python 3.9 or above (64 bit)
+#### Requirements: Python 3.10 or above (64 bit)
 _Note: Tested upto Python 3.14 on Windows and macOS (ARM and x64)._
 #### Features
 * Cross platform (no dependency on pyobjc)
@@ -89,7 +89,7 @@ WIFI_INTELLIGENCE | Gets Wifi connect/disconnect information from Apple Intellig
 XPROTECT | Reads XProtect diagnostic files and XProtect Behavior Service database
 
 ### Coming soon..
-* Plugins for BIOME and KnowledgeC
+* Plugin for KnowledgeC
 * More documentation
 
 For installation (to run from code) see https://github.com/ydkhatri/mac_apt/wiki/Installation-for-Python3  

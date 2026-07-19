@@ -43,11 +43,11 @@ def Plugin_Start(mac_info):
     if mac_info.IsValidFolderPath(traceV3_path):
         for item in mac_info.ListItemsInFolder(traceV3_path, EntryType.FILES_AND_FOLDERS, True):
             if item['type'] == EntryType.FILES:
-                mac_info.ExportFile(f'{traceV3_path}/{item['name']}', __Plugin_Name, '', False, True)
+                mac_info.ExportFile(f'{traceV3_path}/{item["name"]}', __Plugin_Name, '', False, True)
             elif item['type'] == EntryType.FOLDERS:
-                mac_info.ExportFolder(f'{traceV3_path}/{item['name']}', __Plugin_Name, True)
+                mac_info.ExportFolder(f'{traceV3_path}/{item["name"]}', __Plugin_Name, True)
             else:
-                log.warning(f'{traceV3_path}/{item['name']} ignored, was neither a file or folder!')
+                log.warning(f'{traceV3_path}/{item["name"]} ignored, was neither a file or folder!')
         log.info('Logs exported.')
     else:
         log.info(f'Unified Logging folder {traceV3_path} not found!')
@@ -56,11 +56,11 @@ def Plugin_Start(mac_info):
     if mac_info.IsValidFolderPath(uuidtext_folder_path):
         for item in mac_info.ListItemsInFolder(uuidtext_folder_path, EntryType.FILES_AND_FOLDERS, True):
             if item['type'] == EntryType.FILES:
-                mac_info.ExportFile(f'{uuidtext_folder_path}/{item['name']}', __Plugin_Name, '', False, True)
+                mac_info.ExportFile(f'{uuidtext_folder_path}/{item["name"]}', __Plugin_Name, '', False, True)
             elif item['type'] == EntryType.FOLDERS:
-                mac_info.ExportFolder(f'{uuidtext_folder_path}/{item['name']}', __Plugin_Name, True)
+                mac_info.ExportFolder(f'{uuidtext_folder_path}/{item["name"]}', __Plugin_Name, True)
             else:
-                log.warning(f'{uuidtext_folder_path}/{item['name']} ignored, was neither a file or folder!')
+                log.warning(f'{uuidtext_folder_path}/{item["name"]} ignored, was neither a file or folder!')
     else:
         log.info(f'Unified Logging folder {uuidtext_folder_path} not found!')
 
