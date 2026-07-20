@@ -1,0 +1,104 @@
+name: Build Release Executables
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            spec_file: mac_apt_windows.spec
+            artifact_name: mac_apt.exe
+            asset_name: mac_apt-windows-x64.exe
+
+          - os: windows-11-arm
+            spec_file: mac_apt_windows.spec
+            artifact_name: mac_apt.exe
+            asset_name: mac_apt-windows-arm64.exe
+
+          - os: macos-15-intel
+            spec_file: all_macos_x86_64.spec
+            artifact_name: mac_apt_x86_64.app
+            asset_name: mac_apt-macos-x64.zip
+
+          - os: macos-latest
+            spec_file: all_macos_arm64.spec
+            artifact_name: mac_apt_arm64.app
+            asset_name: mac_apt-macos-arm64.zip
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create ultra-short temp path (Windows only)
+        if: runner.os == 'Windows'
+        run: |
+          New-Item -ItemType Directory -Path C:\t -Force | Out-Null
+          subst X: C:\t
+          echo "TMP=X:\" >> $env:GITHUB_ENV
+          echo "TEMP=X:\" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Verify temp path is applied
+        if: runner.os == 'Windows'
+        run: python -c "import tempfile; print('Resolved temp dir:', tempfile.gettempdir())"
+        shell: bash
+        
+      - name: Install OpenSSL via vcpkg (Windows ARM64 only)
+        if: matrix.os == 'windows-11-arm'
+        run: |
+          git clone https://github.com/microsoft/vcpkg C:\vcpkg
+          C:\vcpkg\bootstrap-vcpkg.bat
+          C:\vcpkg\vcpkg.exe install openssl:arm64-windows
+          echo "VCPKG_ROOT=C:\vcpkg" >> $env:GITHUB_ENV
+          echo "OPENSSL_DIR=C:\vcpkg\installed\arm64-windows" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        shell: bash
+
+      - name: Generate file needed by spec
+        run: python pyinstaller/version_info_builder.py
+
+      - name: Build executable from spec
+        run: pyinstaller pyinstaller/${{ matrix.spec_file }}
+
+      - name: Package artifact (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          mkdir -p release
+          cp dist/${{ matrix.artifact_name }} release/${{ matrix.asset_name }}
+        shell: bash
+
+      - name: Package artifact (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          mkdir -p release
+          ditto -c -k --sequesterRsrc --keepParent dist/${{ matrix.artifact_name }} release/${{ matrix.asset_name }}
+        shell: bash
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/${{ matrix.asset_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
