@@ -1,5 +1,5 @@
 # mac_apt - macOS (and iOS) Artifact Parsing Tool
-[![Latest version](https://img.shields.io/badge/version-v1.29.0-blue)](https://github.com/ydkhatri/mac_apt/releases/tag/v1.29.0)
+[![Latest version](https://img.shields.io/badge/version-v1.33.2-blue)](https://github.com/ydkhatri/mac_apt/releases/tag/v1.33.2)
 [![status](https://img.shields.io/badge/status-stable-green)]()
 
 mac_apt is a DFIR (Digital Forensics and Incident Response) tool to process Mac computer full disk images (**or _live_ machines**) and extract data/metadata useful for forensic investigation. It is a python based framework, which has plugins to process individual artifacts (such as Safari internet history, Network interfaces, Recently accessed files & volumes, ..)
@@ -39,6 +39,7 @@ AUTOSTART | Retrieves programs, daemons, services set to start at boot/login
 BASICINFO | Basic machine & OS configuration like SN, timezone, computer name, last logged in user, HFS info
 BIOME | Reads biome data  
 BLUETOOTH | Gets Bluetooth Artifacts
+CALCULATOR | Reads calculator history
 CALLHISTORY | Reads call history database
 CFURLCACHE | Reads CFURL cache to URLs, requests and responses
 CHROMIUM | Read Chromium Browsers (Edge, Chrome, Opera,..) History, Top Sites, Downloads and Extension info
