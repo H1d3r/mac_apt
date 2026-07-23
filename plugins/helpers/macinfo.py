@@ -1629,6 +1629,12 @@ class MountedMacInfo(MacInfo):
                     items.append( item )
                 elif types_to_fetch == EntryType.FOLDERS and entry_type == EntryType.FOLDERS:
                     items.append( item )
+        except PermissionError as ex:
+            log.debug("Permission denied to access path : " + mounted_path)
+            log.exception('')
+            log.info("==========================")
+            log.info("PLEASE RUN again WITH sudo")
+            log.info("==========================")
         except FileNotFoundError as ex:
             if str(ex).find('There are no more files') >= 0: # known windows issue on some empty folders!! '[WinError 18] There are no more files:...'
                 pass
